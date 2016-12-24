@@ -1,5 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
-
 import           Control.Monad (forever, join)
 
 import qualified Data.List as L
@@ -46,7 +44,7 @@ main = do
         CardNotFound ->
           "Could not find the selected card"
         )
-      (IO.putStrLn . drawGame)
+      (\g -> IO.putStrLn "" >> IO.putStrLn (drawGame g))
     IO.putStrLn $ drawGameOver r
     IO.putStrLn "Play again? (y/n)"
     l <- IO.getLine
@@ -73,20 +71,21 @@ drawGame g =
     drawCardRow :: Player -> Game -> [String]
     drawCardRow p' =
       foldr (\a -> drawJoin "   " (drawCard . snd $ a)) [] . filter ((==) p' . fst) . gameCards
-  in
-    L.intercalate "\n" . fmap (L.intercalate "\n") $ [
+    left = join [
         drawCardRow Red g
-      , []
-      , drawJoin "   " (drawGrid drawGameSquare $ gameBoard g) (drawCard $ gameSpareCard g)
+      , drawCard $ gameSpareCard g
       , drawCardRow Blue g
-      , []
       ]
+  in
+    L.intercalate "\n" $
+      drawJoin "   " left (drawGrid drawGameSquare $ gameBoard g)
 
 drawJoin :: String -> [String] -> [String] -> [String]
 drawJoin sep as bs =
   let
+    pad x s = s <> replicate (flip (-) (length s) . L.maximum . fmap L.length $ "" : x) ' '
     m = max (length as) (length bs)
-    e x = x <> replicate (m - length x) (replicate (L.maximum . fmap L.length $ "" : x) ' ')
+    e x = fmap (pad x) x <> replicate (m - length x) (pad x "")
   in
     L.zipWith (\a b -> a <> sep <> b) (e as) (e bs)
 
@@ -107,7 +106,10 @@ drawPlayer p =
 
 drawGrid :: (a -> Char) -> Grid a -> [String]
 drawGrid f g =
-  flip map g $ fmap (maybe ' ' f)
+  (flip (<>) ["+---+---+---+---+---+"]) $ g >>=
+    flip (drawJoin "") ["+", "|", "|", "|"]
+      . foldr (drawJoin "") []
+      . fmap (\x -> ["+---", "|   ", ['|', ' ', maybe ' ' f x, ' '], "|  "])
 
 drawCard :: Card -> [String]
 drawCard (Card n g) =
