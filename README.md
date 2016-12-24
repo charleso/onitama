@@ -4,6 +4,32 @@ onitama
 A silly little implementation of
 [onitama](https://boardgamegeek.com/boardgame/160477/onitama) in Haskell.
 
+## Screenshot
+
+```
+Tiger   Mantis      +---+---+---+---+---+
+                    |   |   |   |   |   |
+  #       #         | r |   | R | r |   |
+  @       @         |   |   |   |   |   |
+         # #        +---+---+---+---+---+
+  #                 |   |   |   |   |   |
+Horse               |   | r |   |   | r |
+                    |   |   |   |   |   |
+  #                 +---+---+---+---+---+
+ #@                 |   |   |   |   |   |
+  #                 |   |   |   |   |   |
+                    |   |   |   |   |   |
+Crane   Eel         +---+---+---+---+---+
+                    |   |   |   |   |   |
+  #      #          |   |   | b | b |   |
+  @       @#        |   |   |   |   |   |
+ # #     #          +---+---+---+---+---+
+                    |   |   |   |   |   |
+                    | b |   | B |   | b |
+                    |   |   |   |   |   |
+                    +---+---+---+---+---+
+```
+
 ## Development
 
 1. Install [ghc](https://github.com/ambiata/mafia/blob/master/doc/ghc.md)
