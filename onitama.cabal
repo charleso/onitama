@@ -10,6 +10,24 @@ cabal-version:         >= 1.8
 build-type:            Simple
 description:           onitama
 
+
+library
+  build-depends:
+                      base                            >= 3          && < 5
+                    , random-shuffle                  == 0.0.4
+
+  ghc-options:
+                    -Wall
+
+  hs-source-dirs:
+                    src
+
+  exposed-modules:
+                    Onitama.Card
+                    Onitama.Data
+                    Onitama.Game
+
+
 executable onitama
   ghc-options:
                     -Wall -threaded -O2
@@ -22,4 +40,4 @@ executable onitama
 
   build-depends:
                       base
-                    , random-shuffle                       == 0.0.4
+                    , onitama
