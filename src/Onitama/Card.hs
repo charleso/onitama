@@ -9,6 +9,8 @@ import           Onitama.Data
 -----------------------
 
 -- NOTE: There must be _at least_ 5 cards defined here
+--
+-- http://catholicmom.com/wp-content/uploads/2016/07/Onitama-3.jpg
 cards :: [Card]
 cards =
   [
@@ -22,8 +24,57 @@ cards =
     , parseCard "Horse" [
           "     "
         , "  #  "
-        , "  @# "
+        , " #@  "
         , "  #  "
+        , "     "
+        ]
+    , parseCard "Boar" [
+          "     "
+        , "  #  "
+        , " #@# "
+        , "     "
+        , "     "
+        ]
+    , parseCard "Monkey" [
+          "     "
+        , " # # "
+        , "  @  "
+        , " # # "
+        , "     "
+        ]
+    , parseCard "Rooster" [
+          "     "
+        , "   # "
+        , " #@# "
+        , " #   "
+        , "     "
+        ]
+    , parseCard "Frog" [
+          "     "
+        , " #   "
+        , "# @  "
+        , "   # "
+        , "     "
+        ]
+    , parseCard "Rabbit" [
+          "     "
+        , "   # "
+        , "  @ #"
+        , " #   "
+        , "     "
+        ]
+    , parseCard "Cobra" [
+          "     "
+        , "   # "
+        , " #@  "
+        , "   # "
+        , "     "
+        ]
+    , parseCard "Eel" [
+          "     "
+        , " #   "
+        , "  @# "
+        , " #   "
         , "     "
         ]
     , parseCard "Tiger" [
@@ -45,6 +96,34 @@ cards =
         , "#   #"
         , "  @  "
         , " # # "
+        , "     "
+        ]
+    , parseCard "Sheep" [
+          "     "
+        , " # # "
+        , "  @  "
+        , " # # "
+        , "     "
+        ]
+    , parseCard "Crane" [
+          "     "
+        , "  #  "
+        , "  @  "
+        , " # # "
+        , "     "
+        ]
+    , parseCard "Mantis" [
+          "     "
+        , " # # "
+        , "  @  "
+        , "  #  "
+        , "     "
+        ]
+    , parseCard "Elephant" [
+          "     "
+        , " # # "
+        , " #@# "
+        , "     "
         , "     "
         ]
     ]
