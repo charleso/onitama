@@ -49,6 +49,13 @@ cards =
         , " #   "
         , "     "
         ]
+    , parseCard "Goose" [
+          "     "
+        , " #   "
+        , " #@# "
+        , "   # "
+        , "     "
+        ]
     , parseCard "Frog" [
           "     "
         , " #   "
@@ -94,13 +101,6 @@ cards =
     , parseCard "Dragon" [
           "     "
         , "#   #"
-        , "  @  "
-        , " # # "
-        , "     "
-        ]
-    , parseCard "Sheep" [
-          "     "
-        , " # # "
         , "  @  "
         , " # # "
         , "     "
