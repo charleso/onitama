@@ -1,0 +1,25 @@
+name:                  onitama
+version:               0.0.1
+license:               AllRightsReserved
+author:                Charles O'Farrell <charleso@gmail.com>
+maintainer:            Charles O'Farrell <charleso@gmail.com>
+copyright:             (c) 2016 Charles O'Farrell.
+synopsis:              onitama
+category:              Game
+cabal-version:         >= 1.8
+build-type:            Simple
+description:           onitama
+
+executable onitama
+  ghc-options:
+                    -Wall -threaded -O2
+                    -rtsopts -with-rtsopts "-T -N"
+
+  hs-source-dirs:   main
+
+  main-is:
+                    onitama.hs
+
+  build-depends:
+                      base
+                    , random-shuffle                       == 0.0.4
