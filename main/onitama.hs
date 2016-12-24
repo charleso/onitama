@@ -2,7 +2,6 @@
 
 import           Control.Monad (forever, join)
 
-import qualified Data.Char as C
 import qualified Data.List as L
 import           Data.Monoid ((<>))
 
@@ -29,7 +28,7 @@ main = do
           IO.putStr $ drawPlayer p <> " move: "
           IO.hFlush IO.stdout
           l <- IO.getLine
-          maybe (IO.putStrLn "Invalid command" >> go p cs) pure . parseMove cs $ l
+          maybe (IO.putStrLn "Invalid command" >> go p cs) pure . parseMove $ l
         in
           go)
       (\e -> IO.putStrLn $ case e of
@@ -43,6 +42,8 @@ main = do
           "Whoops, you've tried to take your own piece"
         PositionTaken ->
           "This position is already taken"
+        CardNotFound ->
+          "Could not find the selected card"
         )
       (IO.putStrLn . drawGame)
     IO.putStrLn $ drawGameOver r
@@ -54,12 +55,12 @@ main = do
       _ ->
         exitSuccess
 
-parseMove :: [Card] -> String -> Maybe Move
-parseMove cards' s =
+parseMove :: String -> Maybe Move
+parseMove s =
   case s of
     x1 : ',' : y1 : ' ' : x2 : ',' : y2 : ' ' : c ->
       Move
-        <$> L.find ((==) (fmap C.toLower c) . fmap C.toLower . cardName) cards'
+        <$> (pure . CardSelect) c
         <*> (join $ newCoord <$> readMaybe [x1] <*> readMaybe [y1])
         <*> (join $ newCoord <$> readMaybe [x2] <*> readMaybe [y2])
     _ ->

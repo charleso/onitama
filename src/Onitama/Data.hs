@@ -7,6 +7,7 @@ module Onitama.Data (
   , Coord
   , Card (..)
   , CardSquare (..)
+  , CardSelect (..)
   , GameSquare
   , Move (..)
   , Player (..)
@@ -46,11 +47,16 @@ data CardSquare =
   | CardMove
   deriving (Eq, Show)
 
+newtype CardSelect =
+  CardSelect {
+      renderCardSelect :: String
+    } deriving (Eq, Show)
+
 type GameSquare = (Player, Piece)
 
 data Move =
   Move {
-      moveCard :: Card
+      moveCard :: CardSelect
     , moveSourceCoord :: Coord
     , moveTargetCoord :: Coord
     } deriving (Eq, Show)

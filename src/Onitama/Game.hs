@@ -7,6 +7,7 @@ module Onitama.Game (
 
 import           Control.Monad (join, when)
 
+import qualified Data.Char as C
 import qualified Data.List as L
 import           Data.Maybe (catMaybes)
 import           Data.Monoid ((<>))
@@ -23,6 +24,7 @@ data InvalidMove =
   | InvalidMoveForCard
   | InvalidCapture
   | PositionTaken
+  | CardNotFound
   deriving (Eq, Show)
 
 -----------------------
@@ -77,7 +79,15 @@ swapGridValue (x, y) a g =
 move :: Player -> Move -> Game -> Either InvalidMove (Either GameOver Game)
 move p m g = do
 
-  when (not $ isValidCardMove m) $
+  let
+    (mx, gcs) = L.partition (\(p', c') -> p == p' && isCardSelected (moveCard m) c') (gameCards g)
+  c <- case mx of
+    c : [] ->
+      pure . snd $ c
+    _ ->
+      Left CardNotFound
+
+  when (not $ isValidCardMove m c) $
     Left InvalidMoveForCard
 
   let
@@ -88,14 +98,6 @@ move p m g = do
     Just (pl, _) ->
       when (pl /= p) $
         Left InvalidPiece
-
-  let
-    (mx, gcs) = L.partition ((==) ((,) p (cardName . moveCard $ m)) . fmap cardName) (gameCards g)
-  c <- case mx of
-    c : [] ->
-      pure . snd $ c
-    _ ->
-      Left InvalidMoveForCard
 
   let
     (target, gb2) = swapGridValue (moveTargetCoord m) x gb1
@@ -122,9 +124,9 @@ move p m g = do
         (flipCard c)
         gb2
 
-isValidCardMove :: Move -> Bool
+isValidCardMove :: Move -> Card -> Bool
 isValidCardMove m =
-  L.elem (distance (moveSourceCoord m) (moveTargetCoord m)) . validCardMoves $ moveCard m
+  L.elem (distance (moveSourceCoord m) (moveTargetCoord m)) . validCardMoves
 
 distance :: Coord -> Coord -> Coord
 distance (x1, y1) (x2, y2) =
@@ -143,6 +145,13 @@ validCardMoves =
       . L.zipWith (\y -> L.zipWith (\x m -> fmap (const (x, y)) m) [0..]) [0..]
       . reverse
       . cardGrid
+
+isCardSelected :: CardSelect -> Card -> Bool
+isCardSelected cs c =
+  let
+    toLower = fmap C.toLower
+  in
+    (toLower . renderCardSelect) cs == (toLower . cardName) c
 
 flipCard :: Card -> Card
 flipCard c =
