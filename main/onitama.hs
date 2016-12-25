@@ -77,7 +77,9 @@ drawGame g =
       foldr (\a -> drawJoin "   " (drawCard . snd $ a)) [] . filter ((==) p' . fst) . gameCards
     left = join [
         drawCardRow Red g
+      , [""]
       , drawCard $ gameSpareCard g
+      , [""]
       , drawCardRow Blue g
       ]
   in
@@ -110,14 +112,20 @@ drawPlayer p =
 
 drawGrid :: (a -> Char) -> Grid a -> [String]
 drawGrid f g =
-  (flip (<>) ["+---+---+---+---+---+"]) $ g >>=
-    flip (drawJoin "") ["+", "|", "|", "|"]
-      . foldr (drawJoin "") []
-      . fmap (\x -> ["+---", "|   ", ['|', ' ', maybe ' ' f x, ' '], "|  "])
+  let
+    sk = g >>= flip (drawJoin "") ["+", "|", "|", "|"] . foldr (drawJoin "") [] . fmap sq
+    sq x = ["+---", "|   ", ['|', ' ', maybe ' ' f x, ' '], "|  "]
+    ys = drop 1 . (=<<) ((<>) (replicate 3 "") . pure . show) $ [4 :: Int,3..0]
+  in
+    drawJoin " " ys $ join [
+        sk
+      , ["+---+---+---+---+---+"]
+      , ["  a   b   c   d   e  "]
+      ]
 
 drawCard :: Card -> [String]
 drawCard (Card n g) =
-  n : fmap (fmap (maybe ' ' drawCardSquare)) g
+  n : fmap (fmap (maybe '-' drawCardSquare)) g
 
 drawCardSquare :: CardSquare -> Char
 drawCardSquare cs =
