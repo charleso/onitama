@@ -33,11 +33,15 @@ Frog    Ox          1 |   |   | b | b |   |
 
 ## Development
 
+### Stack
+
+1. Install [stack](https://www.haskellstack.org/)
+2. `stack build :onitama-cli`
+3. `stack exec onitama-cl`
+
+### Mafia
+
 1. Install [ghc](https://github.com/ambiata/mafia/blob/master/doc/ghc.md)
 2. Install [cabal](https://github.com/ambiata/mafia/blob/master/doc/cabal.md)
-3. Build
-
-    ```
-    ./mafia build
-    ```
+3. `./mafia build`
 4. `./dist/build/onitama-cli/onitama-cli`
