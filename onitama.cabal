@@ -28,7 +28,7 @@ library
                     Onitama.Game
 
 
-executable onitama
+executable onitama-cli
   ghc-options:
                     -Wall -threaded -O2
                     -rtsopts -with-rtsopts "-T -N"
@@ -36,7 +36,7 @@ executable onitama
   hs-source-dirs:   main
 
   main-is:
-                    onitama.hs
+                    onitama-cli.hs
 
   build-depends:
                       base

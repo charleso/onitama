@@ -40,4 +40,4 @@ Frog    Ox          1 |   |   | b | b |   |
     ```
     ./mafia build
     ```
-4. `./dist/build/onitama/onitama`
+4. `./dist/build/onitama-cli/onitama-cli`
