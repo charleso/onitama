@@ -1,5 +1,6 @@
 import           Control.Monad (forever, join)
 
+import qualified Data.Char as C
 import qualified Data.List as L
 import           Data.Monoid ((<>))
 
@@ -56,14 +57,17 @@ main = do
 
 parseMove :: String -> Maybe Move
 parseMove s =
-  case s of
-    x1 : ',' : y1 : ' ' : x2 : ',' : y2 : ' ' : c ->
-      Move
-        <$> (pure . CardSelect) c
-        <*> (join $ newCoord <$> readMaybe [x1] <*> readMaybe [y1])
-        <*> (join $ newCoord <$> readMaybe [x2] <*> readMaybe [y2])
-    _ ->
-      Nothing
+  let
+    ord' x = C.ord (C.toLower x) - C.ord 'a'
+  in
+    case s of
+      x1 : y1 : ' ' : x2 : y2 : ' ' : c ->
+        Move
+          <$> (pure . CardSelect) c
+          <*> (join $ newCoord (ord' x1) <$> readMaybe [y1])
+          <*> (join $ newCoord (ord' x2) <$> readMaybe [y2])
+      _ ->
+        Nothing
 
 drawGame :: Game -> String
 drawGame g =
