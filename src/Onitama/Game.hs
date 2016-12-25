@@ -153,9 +153,20 @@ isCardSelected cs c =
   in
     (toLower . renderCardSelect) cs == (toLower . cardName) c
 
+-- |
+--
+--  #
+-- # @
+--    #
+--
+-- Flips to:
+--
+--  #
+--   @ #
+--    #
 flipCard :: Card -> Card
 flipCard c =
-  c { cardGrid = reverse $ cardGrid c }
+  c { cardGrid = reverse . fmap reverse $ cardGrid c }
 
 switchPlayer :: Player -> Player
 switchPlayer p =
